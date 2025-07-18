@@ -16,7 +16,9 @@ def walk_directory(path, excluded=None, max_depth=None, current_depth=0, prefix=
 
             for index, entry in enumerate(entries):
                 connector = "└───" if index == count - 1 else "├───"
-                print(f"{prefix}{connector}{entry.name}")
+                color = "\033[94m" if entry.is_file() else "\033[92m"
+                suffix = "" if entry.is_file() else "/"
+                print(f"{prefix}{connector}{color}{entry.name}{suffix}\033[0m")
 
                 if entry.is_dir():
                     extension = "    " if index == count - 1 else "│   "
