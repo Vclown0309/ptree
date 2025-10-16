@@ -1,2 +1,2 @@
 @echo off
-python "%~dp0tree.py" %*
+python "%~dp0ptree.py" %*
