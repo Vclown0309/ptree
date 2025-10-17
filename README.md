@@ -1,116 +1,67 @@
-# ptree — Python Directory Tree Viewer
+# ptree - Directory Tree Viewer
 
-`ptree` is a Python script to display directory structures in a tree-like format, similar to the classic `tree` command, with support for excluding files/folders and limiting depth.
-
-> **Note:**
-> The command is named `ptree` to avoid conflicts with the built-in Windows `tree` command.
-
----
+A simple and efficient directory tree visualization tool with custom depth, exclusion, file filtering, and multi-language support, helping you quickly visualize directory structures.
 
 ## Features
 
-* Recursive directory listing in a tree structure
-* Option to exclude specific files or folders
-* Limit the maximum depth of directory traversal
-* Cross-platform support (Windows CMD, PowerShell, Git Bash, WSL)
+- **Multi-language Support**: Built-in Chinese and English, default language can be configured
+- **Color Differentiation**: Directories and files displayed in different colors (requires colorama)
+- **Flexible Filtering**: Filter files by type (e.g., only show `.txt`, `.py` files)
+- **Persistent Configuration**: Saves default color mode and language settings to config file
+- **Friendly Interaction**: Ctrl+C interrupt allows continuation or termination, clear error prompts
+- **Cross-platform Compatibility**: Automatically adapts to console encoding for Windows, Linux and macOS
 
----
+## Installation
 
-## Setup
-
-### 1. Clone or download this repository
-
-Place all files into a folder, e.g.:
-
-```plaintext
-C:\Users\YourName\Scripts\
-```
-
-### 2. Ensure Python is installed and available in your PATH
-
-Check by running:
-
-```bash
-python --version
-```
-
----
-
-### 4. Create launcher scripts
-
-* **Windows CMD/PowerShell:** `ptree.bat`
-
-  ```bat
-  @echo off
-  python "%~dp0ptree.py" %*
-  ```
-
-* **Git Bash / WSL:** `ptree`
-
-  ```bash
-  #!/bin/bash
-  python "$(dirname "$0")/ptree.py" "$@"
-  ```
-
-Make sure the `ptree` file has execute permission:
-
-```bash
-chmod +x ptree
-```
-
----
-
-### 5. Add the folder to your system `PATH`
-
-* On Windows:
-  Add the folder (e.g., `C:\Users\YourName\Scripts`) to your user or system environment variable `PATH`.
-
-* On Linux/macOS (bash):
-  Add this line to your `~/.bashrc` or `~/.zshrc`:
-
-  ```bash
-  export PATH="$PATH:/path/to/your/scripts"
-  ```
-
----
-
-### 6. Restart your terminal
-
-Open a new terminal window to apply the changes.
-
----
+1. Clone or download this project
+2. Install dependencies (required for color display):
+   ```bash
+   pip install colorama
+   ```
+   
+   >  or use `pip install -r requirements.txt` ,   **Ensure this command is executed in the project directory.** 
 
 ## Usage
 
-Run the `ptree` command followed by the directory path and optional arguments:
+### Basic Usage
 
 ```bash
-ptree C:\path\to\directory -d 2 -e __pycache__ .git
+# Display directory tree of current directory (default depth 3)
+python ptree.py
+
+# Display directory tree of specified path
+python ptree.py /path/to/directory
 ```
 
-### Arguments
+### Common Parameters
 
-* `path` — Starting directory path (required)
-* `-d`, `--depth` — Maximum depth to traverse (optional)
-* `-e`, `--exclude` — List of file or folder names to exclude (optional)
+| Parameter         | Description                                 | Example                                              |
+| ----------------- | ------------------------------------------- | ---------------------------------------------------- |
+| `-d, --depth`     | Set maximum traversal depth                 | `python ptree.py -d 2` (show 2 levels only)          |
+| `-e, --exclude`   | Exclude files/directories by name           | `python ptree.py -e __pycache__ .git`                |
+| `-t, --types`     | Show only specified file types              | `python ptree.py -t py txt` (show .py and .txt only) |
+| `-n, --no-color`  | Disable color display (use text indicators) | `python ptree.py -n`                                 |
+| `-c, --set-color` | Set default color mode (on/off)             | `python ptree.py -c off` (disable color by default)  |
+| `-l, --set-lang`  | Set default language (zh/en)                | `python ptree.py -l en` (default to English)         |
+| `-v, --version`   | Show version information                    | `python ptree.py -v`                                 |
 
----
+## Configuration File
 
-## Example
+The config file is located at `~/.ptree/config.json`, example content:
 
-```bash
-ptree C:\Users -d 3 -e node_modules .git
+```json
+{
+  "use_color": true,
+  "language": "en"
+}
 ```
 
----
+Can be modified via `--set-color` and `--set-lang` parameters, or edited directly.
 
 ## Notes
 
-* Do **not** use the name `tree` for the command to avoid conflict with Windows' built-in `tree.exe`.
-* The launcher scripts (`ptree.bat` and `ptree`) ensure the script works from any terminal.
+- For color display issues on Windows, follow program prompts to modify registry for ANSI support
+- Automatically falls back to text indicators ([Dir]/[File]) when colorama is not installed
+- Shows `[Permission Denied]` for inaccessible directories without interrupting the program
 
----
 
-## License
-
-[Walaszek License](https://youtu.be/mUl-D6MATvA)
