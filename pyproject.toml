@@ -1,0 +1,18 @@
+[project]
+name = "ptree"
+version = "1.1"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "colorama>=0.4.6",
+]
+[tool.uv]
+# index 字段使用结构体数组
+index = [{ url = "https://pypi.mirrors.ustc.edu.cn/simple/" }]
+
+# extra-index-url 字段使用字符串数组
+extra-index-url = [
+    "https://pypi.tuna.tsinghua.edu.cn/simple/",
+    "https://mirrors.aliyun.com/pypi/simple/"
+]
